@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Didi! 👑🎂</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Pacifico&family=Abril+Fatface&display=swap" rel="stylesheet">
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; font-family: 'Poppins', sans-serif; background: #121212; color: white; overflow: hidden; cursor: default; }
+        .screen { height: 100vh; width: 100vw; display: flex; flex-direction: column; justify-content: center; align-items: center; position: absolute; transition: 1.2s cubic-bezier(0.68, -0.6, 0.32, 1.6); text-align: center; }
+        
+        /* Step 1: Deep Black Intro */
+        #screen1 { background: linear-gradient(135deg, #1f1f1f, #000); cursor: pointer; z-index: 5; }
+        .tap-content { animation: initialPulse 2s infinite ease-in-out; }
+        .tap-text { font-family: 'Pacifico', cursive; font-size: 3rem; color: #ffeb3b; text-shadow: 0 0 15px rgba(255, 235, 59, 0.7); }
+        .hint { margin-top: 20px; font-size: 1rem; color: #777; letter-spacing: 2px; text-transform: uppercase; }
+
+        /* Step 2: Neon Countdown */
+        #screen2 { transform: translateY(100%); background: #ff1744; z-index: 4; }
+        .countdown-title { font-weight: 300; letter-spacing: 10px; color: #fff; text-transform: uppercase; margin-bottom: 20px; }
+        #countdown { font-size: 15rem; font-weight: bold; line-height: 1; font-family: 'Abril Fatface', serif; text-shadow: 10px 10px 0px rgba(194, 24, 91, 0.8), 20px 20px 0px rgba(194, 24, 91, 0.4); }
+
+        /* Step 3: Minimalist Cake */
+        #screen3 { transform: translateY(100%); background: #fffcf9; color: #8e24aa; z-index: 3; }
+        .cake-status { font-family: 'Abril Fatface', serif; font-size: 2.8rem; margin-bottom: -15px; }
+        .cake-wrapper { font-size: 150px; position: relative; display: inline-block; }
+        .knife { font-size: 80px; position: absolute; top: -70px; right: -40px; transition: 1.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); transform: rotate(-30deg); }
+        .cut-anim { transform: translate(-70px, 110px) rotate(-90deg); }
+
+        /* Step 4: Glassmorphism Final Wishes */
+        #screen4 { transform: translateY(100%); background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; z-index: 2; overflow: hidden; }
+        
+        /* Modern Glass Card */
+        .glass-wish-card { 
+            background: rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(15px); 
+            border-radius: 40px; 
+            padding: 60px 50px; 
+            border: 2px solid rgba(255,255,255,0.25); 
+            max-width: 600px; 
+            box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+            transition: 0.5s ease;
+            transform: perspective(1000px); /* for 3D tilt */
+        }
+        
+        /* Typography */
+        .glass-wish-card h1 { font-family: 'Abril Fatface', serif; font-size: 4rem; color: #fff; margin: 0 0 15px 0; text-shadow: 0 5px 20px rgba(0,0,0,0.2); }
+        .glass-wish-card .main-wish { font-size: 1.6rem; line-height: 1.6; margin: 30px 0; font-weight: 300; color: rgba(255,255,255,0.9); }
+        .glass-wish-card .signature { font-size: 1.8rem; font-weight: 600; color: #ffeb3b; text-shadow: 0 0 10px #ffeb3b; }
+
+        /* Animations */
+        @keyframes initialPulse { 0% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.08); opacity: 1; } 100% { transform: scale(1); opacity: 0.8; } }
+        
+        /* Balloon Animation */
+        .balloon { position: absolute; bottom: -100px; width: 50px; height: 65px; border-radius: 50%; opacity: 0.8; animation: fly 10s linear infinite; }
+        @keyframes fly { from { bottom: -100px; transform: translateX(0); } to { bottom: 110%; transform: translateX(50px); } }
+        
+        /* Firework Animation */
+        .firework { position: absolute; top: 0; left: 0; }
+        .firework::before, .firework::after { content: ''; position: absolute; top: 50%; left: 50%; border-radius: 50%; opacity: 0; animation: burst 2s ease-out infinite; }
+        @keyframes burst { from { transform: translate(-50%, -50%) scale(0.1); opacity: 1; } to { transform: translate(-50%, -50%) scale(1.5); opacity: 0; } }
+        .f1 { top: 20%; left: 30%; color: #ff0; }
+        .f2 { top: 50%; left: 70%; color: #0f0; }
+        .f3 { top: 70%; left: 20%; color: #f00; }
+        .firework::before { box-shadow: 0 0 0 2px; }
+        .firework::after { box-shadow: 0 0 0 4px; border-style: dotted; }
+
+    </style>
+</head>
+<body>
+
+    <audio id="bdayMusic">
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="screen1" class="screen" onclick="beginAdventure()">
+        <div class="tap-content">
+            <div class="tap-text">A Special Surprise for Didi... ✨</div>
+            <div class="hint">Tap Here to Begin</div>
+        </div>
+    </div>
+
+    <div id="screen2" class="screen">
+        <div class="countdown-title">READY YOURSELF</div>
+        <div id="countdown">3</div>
+    </div>
+
+    <div id="screen3" class="screen">
+        <div class="cake-status" id="cakeLabel">Make a Wish! 🕯️</div>
+        <div class="cake-wrapper">
+            <span class="knife" id="knife">🔪</span>
+            🎂
+        </div>
+    </div>
+
+    <div id="screen4" class="screen">
+        <div class="firework f1"></div>
+        <div class="firework f2"></div>
+        <div class="firework f3"></div>
+
+        <div class="glass-wish-card" id="tiltCard">
+            <h1>HAPPY BIRTHDAY! 👑</h1>
+            <div class="main-wish">
+                To my wonderful sister, <br>
+                May your year be as beautiful, magical, and <br>
+                extraordinary as your presence!
+            </div>
+            <div class="signature">Best wishes always, <br><span>Gopal</span></div>
+            <div style="font-size: 55px; margin-top: 30px; letter-spacing: 15px;">🎈🎂🎊</div>
+        </div>
+    </div>
+
+    <script>
+        let isRunning = false;
+
+        function beginAdventure() {
+            if (isRunning) return;
+            isRunning = true;
+
+            // Start music.mp3
+            const music = document.getElementById('bdayMusic');
+            music.play().catch(err => console.log("Music play blocked:", err));
+
+            // Move screens (Slide down animation)
+            moveDown('screen1', 'screen2');
+
+            // Countdown Logic
+            let time = 3;
+            const display = document.getElementById('countdown');
+            const timer = setInterval(() => {
+                time--;
+                if (time > 0) {
+                    display.innerText = time;
+                } else {
+                    clearInterval(timer);
+                    display.innerText = "❤️";
+                    setTimeout(() => moveDown('screen2', 'screen3'), 900);
+                }
+            }, 1000);
+        }
+
+        function moveDown(hideId, showId) {
+            document.getElementById(hideId).style.transform = "translateY(-100%)";
+            document.getElementById(showId).style.transform = "translateY(0)";
+
+            if (showId === 'screen3') {
+                setTimeout(() => {
+                    document.getElementById('knife').classList.add('cut-anim');
+                    setTimeout(() => {
+                        document.getElementById('cakeLabel').innerText = "LET'S PARTY! 🎉";
+                        activateDecorations();
+                        setTimeout(() => moveDown('screen3', 'screen4'), 2800);
+                    }, 1400);
+                }, 1600);
+            }
+        }
+
+        function activateDecorations() {
+            // Add colorful balloons
+            const colors = ['#FFD700', '#FF69B4', '#00BFFF', '#ADFF2F', '#FF4500', '#FF1744'];
+            const container = document.getElementById('screen4');
+            for(let i=0; i<25; i++) {
+                let balloon = document.createElement('div');
+                balloon.className = 'balloon';
+                balloon.style.left = Math.random() * 98 + '%';
+                balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                balloon.style.animationDelay = (Math.random() * 8) + 's';
+                container.appendChild(balloon);
+            }
+
+            // 3D Tilt Effect on Card (only for desktop/mouse)
+            const card = document.getElementById('tiltCard');
+            document.addEventListener('mousemove', (e) => {
+                let x = (window.innerWidth / 2 - e.pageX) / 25;
+                let y = (window.innerWidth / 2 - e.pageY) / 25;
+                card.style.transform = `perspective(1000px) rotateX(${y}deg) rotateY(${x}deg)`;
+            });
+        }
+    </script>
+</body>
+</html>
